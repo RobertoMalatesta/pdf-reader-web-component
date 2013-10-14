@@ -156,25 +156,17 @@ module.exports = function (grunt) {
       '<%= yeoman.dist %>/scripts/polymer.min.js': [
         '<%= yeoman.app %>/bower_components/polymer/polymer.min.js'
       ],
-      '<%= yeoman.dist %>/elements/<%= yeoman.element %>/scripts/main.min.js': [
+      '.tmp/elements/<%= yeoman.element %>/scripts/vendor/pdf.js': [
+        '<%= yeoman.app %>/scripts/vendor/pdf.js'
+      ],
+      '.tmp/elements/<%= yeoman.element %>/scripts/main.js': [
         '<%= yeoman.app %>/scripts/main.js'
       ]
     },
-    useminPrepare: {
-      html: [
-        '<%= yeoman.app %>/index.html',
-        '<%= yeoman.app %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
-      ],
-      options: {
-        dest: '<%= yeoman.dist %>'
-      }
-    },
     usemin: {
       html: [
-        '<%= yeoman.dist %>/{,*/}*.html',
-        '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
+        '<%= yeoman.dist %>/{,*/}*.html'
       ],
-      css: ['<%= yeoman.dist %>/elements/<%= yeoman.element %>/styles/{,*/}*.css'],
       options: {
         dirs: ['<%= yeoman.dist %>']
       }
@@ -182,31 +174,10 @@ module.exports = function (grunt) {
     cssmin: {
       dist: {
         files: {
-          '<%= yeoman.dist %>/elements/<%= yeoman.element %>/styles/main.min.css': [
+          '.tmp/elements/<%= yeoman.element %>/styles/main.css': [
             '.tmp/elements/<%= yeoman.element %>/styles/{,*/}*.css'
           ]
         }
-      }
-    },
-    htmlmin: {
-      dist: {
-        options: {
-          /*removeCommentsFromCDATA: true,
-          // https://github.com/yeoman/grunt-usemin/issues/44
-          //collapseWhitespace: true,
-          collapseBooleanAttributes: true,
-          removeAttributeQuotes: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeOptionalTags: true*/
-        },
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>',
-          src: '*.html',
-          dest: '<%= yeoman.dist %>'
-        }]
       }
     },
     copy: {
@@ -231,20 +202,59 @@ module.exports = function (grunt) {
           cwd: '<%= yeoman.app %>',
           dest: '<%= yeoman.dist %>/elements/<%= yeoman.element %>',
           src: [
-            'scripts/vendor/{,*/}*.js',
-            'images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+            'scripts/vendor/pdf.worker.js'
+          ]
+        },
+        {
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            'index.html',
+            'elements/<%= yeoman.element %>/{,*/}*.html',
+            'sample.pdf'
           ]
         }]
       },
-      element: {
-        expand: true,
-        dot: true,
-        cwd: '<%= yeoman.app %>',
-        dest: '<%= yeoman.dist %>',
-        src: [
-          'elements/<%= yeoman.element %>/{,*/}*.html',
-          'sample.pdf'
-        ]
+    },
+    htmlbuild: {
+      dist: {
+        src: '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html',
+        dest: '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html',
+        options: {
+          scripts: {
+            bundle: [
+              '.tmp/elements/<%= yeoman.element %>/scripts/vendor/pdf.js',
+              '.tmp/elements/<%= yeoman.element %>/scripts/main.js'
+            ]
+          },
+          styles: {
+            main: '.tmp/elements/<%= yeoman.element %>/styles/{,*/}*.css'
+          }
+        }
+      }
+    },
+    imageEmbed: {
+      dist: {
+        src: '.tmp/elements/<%= yeoman.element %>/styles/{,*/}*.css',
+        dest: '.tmp/elements/<%= yeoman.element %>/styles/main.css',
+        options: {
+          deleteAfterEncoding : false
+        }
+      }
+    },
+    htmlcompressor: {
+      compile: {
+        files: {
+          '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html': '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
+        },
+        options: {
+          type: 'html',
+          preserveServerScript: true,
+          removeScriptAttr: true,
+          compressCss: true
+        }
       }
     },
     bower: {
@@ -284,13 +294,14 @@ module.exports = function (grunt) {
     'clean:dist',
     'compass',
     'autoprefixer',
-    'useminPrepare',
-    'htmlmin',
     'cssmin',
     'uglify',
+    'copy:images',
     'copy:dist',
-    'copy:element',
-    'usemin'
+    'usemin',
+    'imageEmbed',
+    'htmlbuild:dist',
+    'htmlcompressor'
   ]);
 
   grunt.registerTask('default', [

@@ -2,9 +2,9 @@
 
   <template>
 
-    <!-- build:css styles/main.min.css -->
+    <!-- build:style inline main -->
     <link rel="stylesheet" href="styles/main.css">
-    <!-- endbuild -->
+    <!-- /build -->
 
     <style>
       @host {
@@ -55,10 +55,10 @@
 
   </template>
 
+  <!-- build:script inline bundle -->
   <script src="scripts/vendor/pdf.js"></script>
-  <!-- build:js scripts/main.min.js -->
   <script src="scripts/main.js"></script>
-  <!-- endbuild -->
+  <!-- /build -->
 
   <script>
     Polymer('pdf-reader', {
