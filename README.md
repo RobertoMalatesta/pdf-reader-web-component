@@ -7,6 +7,10 @@ Component can be used as a widget on the web page to display attached PDF docs.
 
 ##Usage
 
+Install deps and build component:
+
+`npm install && bower install && grunt`
+
 Include Polymer script in your HTML:
 
 `<script src="polymer.min.js"></script>`

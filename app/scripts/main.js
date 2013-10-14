@@ -1,6 +1,8 @@
-(function (window, undefined) {
-  'use strict';
+/* global PDFJS, URL */
 
+'use strict';
+
+(function (window, undefined) {
   var Reader = function (el) {
     this.element = el;
     this.reader = el.shadowRoot.querySelector('.viewer');
@@ -170,7 +172,7 @@
 
   Reader.prototype.zoomPage = function (e, context) {
     var zoom = e.target,
-        step = .1,
+        step = 0.1,
         digValue;
 
     if (zoom.classList.contains('zoom-lvl')) {
@@ -195,13 +197,13 @@
       context.renderPDF(context.currentPage);
     } else {
       if (zoom.classList.contains('scale-down')) {
-        step = - .1;
+        step = - 0.1;
       }
 
       context.currentZoomVal = Math.round((Math.round(context.currentZoomVal * 10) / 10 + step) * 10) / 10;
 
-      if (context.currentZoomVal <= .1) {
-        context.currentZoomVal = .1;
+      if (context.currentZoomVal <= 0.1) {
+        context.currentZoomVal = 0.1;
         context.zoomNav[0].classList.add('disabled');
       } else if (context.currentZoomVal >= 2) {
         context.currentZoomVal = 2;

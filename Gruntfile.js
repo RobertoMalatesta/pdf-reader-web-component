@@ -216,7 +216,7 @@ module.exports = function (grunt) {
             'sample.pdf'
           ]
         }]
-      },
+      }
     },
     htmlbuild: {
       dist: {
