@@ -1,0 +1,78 @@
+<polymer-element name="pdf-reader"  attributes="">
+
+  <template>
+
+    <!-- build:css styles/main.min.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <style>
+      @host {
+        :scope {
+          display: block;
+          font: normal 16px Calibri, "Trebuchet MS", Verdana, sans-serif;
+          overflow: hidden;
+        }
+      }
+    </style>
+
+    <div class="viewer">
+      <div class="toolbar">
+        <ul>
+          <li class="page-nav hidden">
+            <div class="next-prev">
+              <div class="nav prev disabled"></div>
+              <div class="nav next"></div>
+            </div>
+            <span>Page:</span>
+            <input type="text" class="page-num input-field" autocomplete="off">
+            <span>of <span class="total-page"></span></span>
+          </li>
+          <li class="scale">
+            <div class="scale-down"></div>
+            <div class="scale-up"></div>
+            <select class="zoom-lvl input-field">
+              <option class="custom-zoom hidden"></option>
+              <option class="fit-zoom" selected="selected" value="fit">Page Fit</option>
+              <option value="width">Page Width</option>
+              <option value="50">50%</option>
+              <option value="75">75%</option>
+              <option value="100">100%</option>
+              <option value="125">125%</option>
+              <option value="150">150%</option>
+              <option value="200">200%</option>
+            </select>
+          </li>
+          <li class="download">
+            <button type="button"></button>
+          </li>
+        </ul>
+      </div>
+      <div class="viewport-out">
+        <canvas class="viewport"></canvas>
+      </div>
+    </div>
+
+  </template>
+
+  <script src="scripts/vendor/pdf.js"></script>
+  <!-- build:js scripts/main.min.js -->
+  <script src="scripts/main.js"></script>
+  <!-- endbuild -->
+
+  <script>
+    Polymer('pdf-reader', {
+      //applyAuthorStyles: true,
+      //resetStyleInheritance: true,
+      created: function() {
+        this.instance = new Polymer.Reader(this);
+      },
+      enteredView: function() { },
+      leftView: function() { },
+      attributeChanged: function (attrName, oldVal, newVal) {
+        this.instance.setSize(attrName, newVal);
+      }
+    });
+  </script>
+
+</polymer-element>
