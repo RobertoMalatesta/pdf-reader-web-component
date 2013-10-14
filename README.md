@@ -5,6 +5,8 @@ PDF Reader Web Component is a custom element built with <a href="http://www.poly
 
 Component can be used as a widget on the web page to display attached PDF docs.
 
+<a href="http://demo.romanliutikov.com/web-components/">DEMO</a>
+
 ##Usage
 
 Install deps and build component:
