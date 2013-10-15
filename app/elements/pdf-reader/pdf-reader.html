@@ -16,24 +16,24 @@
       }
     </style>
 
-    <div class="viewer">
-      <div class="toolbar">
-        <ul>
-          <li class="page-nav hidden">
-            <div class="next-prev">
-              <div class="nav prev disabled"></div>
-              <div class="nav next"></div>
+    <div class="pdf-viewer">
+      <div class="pdf-toolbar">
+        <ul class="pdf-ul">
+          <li class="pdf-page-nav pdf-hidden">
+            <div class="pdf-next-prev">
+              <div class="pdf-nav pdf-prev pdf-disabled"></div>
+              <div class="pdf-nav pdf-next"></div>
             </div>
             <span>Page:</span>
-            <input type="text" class="page-num input-field" autocomplete="off">
-            <span>of <span class="total-page"></span></span>
+            <input type="text" class="pdf-page-num pdf-input-field" autocomplete="off">
+            <span>of <span class="pdf-total-page"></span></span>
           </li>
-          <li class="scale">
-            <div class="scale-down"></div>
-            <div class="scale-up"></div>
-            <select class="zoom-lvl input-field">
-              <option class="custom-zoom hidden"></option>
-              <option class="fit-zoom" selected="selected" value="fit">Page Fit</option>
+          <li class="pdf-scale">
+            <div class="pdf-scale-down"></div>
+            <div class="pdf-scale-up"></div>
+            <select class="pdf-zoom-lvl pdf-input-field">
+              <option class="pdf-custom-zoom pdf-hidden"></option>
+              <option class="pdf-fit-zoom" selected="selected" value="fit">Page Fit</option>
               <option value="width">Page Width</option>
               <option value="50">50%</option>
               <option value="75">75%</option>
@@ -43,13 +43,13 @@
               <option value="200">200%</option>
             </select>
           </li>
-          <li class="download">
-            <button type="button"></button>
+          <li class="pdf-download">
+            <button class="pdf-btn" type="button"></button>
           </li>
         </ul>
       </div>
-      <div class="viewport-out">
-        <canvas class="viewport"></canvas>
+      <div class="pdf-viewport-out">
+        <canvas class="pdf-viewport"></canvas>
       </div>
     </div>
 

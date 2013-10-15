@@ -5,18 +5,18 @@
 (function (window, undefined) {
   var Reader = function (el) {
     this.element = el;
-    this.reader = el.shadowRoot.querySelector('.viewer');
+    this.reader = el.shadowRoot.querySelector('.pdf-viewer');
 
-    this.viewportOut = this.reader.querySelector('.viewport-out');
-    this.viewport = this.reader.querySelector('.viewport');
-    this.pageNav = this.reader.querySelector('.page-nav');
-    this.pageNum = this.reader.querySelector('.page-num');
-    this.pageNavPN = this.pageNav.querySelectorAll('.nav');
+    this.viewportOut = this.reader.querySelector('.pdf-viewport-out');
+    this.viewport = this.reader.querySelector('.pdf-viewport');
+    this.pageNav = this.reader.querySelector('.pdf-page-nav');
+    this.pageNum = this.reader.querySelector('.pdf-page-num');
+    this.pageNavPN = this.pageNav.querySelectorAll('.pdf-nav');
     this.totalPages = this.pageNav.querySelector('span:last-child').children[0];
-    this.zoomNav = this.reader.querySelectorAll('.scale > div');
-    this.zoomLvl = this.reader.querySelector('.zoom-lvl');
-    this.zoomCustom = this.zoomLvl.querySelector('.custom-zoom');
-    this.zoomFit = this.zoomLvl.querySelector('.fit-zoom');
+    this.zoomNav = this.reader.querySelectorAll('.pdf-scale > div');
+    this.zoomLvl = this.reader.querySelector('.pdf-zoom-lvl');
+    this.zoomCustom = this.zoomLvl.querySelector('.pdf-custom-zoom');
+    this.zoomFit = this.zoomLvl.querySelector('.pdf-fit-zoom');
 
     this.viewportStyle = this.viewport.style;
     this.viewportOutStyle = this.viewportOut.style;
@@ -120,12 +120,12 @@
 
   Reader.prototype.loadViewer = function (numOfPages) {
     if (numOfPages === 1) {
-      this.pageNav.classList.add('hidden');
+      this.pageNav.classList.add('pdf-hidden');
     } else {
-      this.pageNav.classList.remove('hidden');
+      this.pageNav.classList.remove('pdf-hidden');
     }
 
-    this.reader.classList.add('loaded');
+    this.reader.classList.add('pdf-loaded');
   };
 
   Reader.prototype.changePage = function (e, context) {
@@ -135,7 +135,7 @@
 
     context.currentPage = parseInt(context.pageNum.value, 10);
 
-    if (!nav.classList.contains('nav')) {
+    if (!nav.classList.contains('pdf-nav')) {
       if (pattern.test(nav.value)) {
         value = nav.value;
 
@@ -148,21 +148,21 @@
         nav.value = value;
         context.renderPDF(value);
       }
-    } else if (!nav.classList.contains('disabled')) {
-      if (!!nav.classList.contains('next')) {
+    } else if (!nav.classList.contains('pdf-disabled')) {
+      if (!!nav.classList.contains('pdf-next')) {
         context.currentPage++;
       } else {
         context.currentPage--;
       }
       if (context.currentPage === 1) {
-        context.pageNavPN[0].classList.add('disabled');
+        context.pageNavPN[0].classList.add('pdf-disabled');
       } else {
-        context.pageNavPN[0].classList.remove('disabled');
+        context.pageNavPN[0].classList.remove('pdf-disabled');
       }
       if (context.currentPage === context.PDF.numPages) {
-        context.pageNavPN[1].classList.add('disabled');
+        context.pageNavPN[1].classList.add('pdf-disabled');
       } else {
-        context.pageNavPN[1].classList.remove('disabled');
+        context.pageNavPN[1].classList.remove('pdf-disabled');
       }
 
       context.pageNum.value = context.currentPage;
@@ -175,7 +175,7 @@
         step = 0.1,
         digValue;
 
-    if (zoom.classList.contains('zoom-lvl')) {
+    if (zoom.classList.contains('pdf-zoom-lvl')) {
       digValue = parseInt(zoom.value, 10);
 
       if (zoom.value === 'fit') {
@@ -186,17 +186,17 @@
         context.currentZoomVal = digValue / 100;
 
         if (digValue === 200) {
-          context.zoomNav[1].classList.add('disabled');
+          context.zoomNav[1].classList.add('pdf-disabled');
         }
       }
       if (parseInt(zoom.value, 10) !== 200) {
-        context.zoomNav[1].classList.remove('disabled');
+        context.zoomNav[1].classList.remove('pdf-disabled');
       }
-      context.zoomNav[0].classList.remove('disabled');
+      context.zoomNav[0].classList.remove('pdf-disabled');
 
       context.renderPDF(context.currentPage);
     } else {
-      if (zoom.classList.contains('scale-down')) {
+      if (zoom.classList.contains('pdf-scale-down')) {
         step = - 0.1;
       }
 
@@ -204,13 +204,13 @@
 
       if (context.currentZoomVal <= 0.1) {
         context.currentZoomVal = 0.1;
-        context.zoomNav[0].classList.add('disabled');
+        context.zoomNav[0].classList.add('pdf-disabled');
       } else if (context.currentZoomVal >= 2) {
         context.currentZoomVal = 2;
-        context.zoomNav[1].classList.add('disabled');
+        context.zoomNav[1].classList.add('pdf-disabled');
       } else {
-        context.zoomNav[0].classList.remove('disabled');
-        context.zoomNav[1].classList.remove('disabled');
+        context.zoomNav[0].classList.remove('pdf-disabled');
+        context.zoomNav[1].classList.remove('pdf-disabled');
         context.renderPDF(context.currentPage);
       }
 
@@ -249,7 +249,7 @@
   Reader.prototype.setEvents = function() {
     var self = this;
 
-    this.reader.querySelector('.download button').addEventListener('click', function() {
+    this.reader.querySelector('.pdf-download .pdf-btn').addEventListener('click', function() {
       self.download(self);
     }, false);
     [].forEach.call(this.pageNavPN, function (el) {
