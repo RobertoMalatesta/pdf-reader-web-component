@@ -23,6 +23,6 @@ HTML import in `head`:
 
 And the element itself:
 
-`<pdf-reader width="720" height="480" data-url="path_to_pdf"></pdf-reader>`
+`<pdf-reader src="path_to_pdf" width=720 height=480></pdf-reader>`
 
 Where `path_to_pdf` is the url to PDF file.

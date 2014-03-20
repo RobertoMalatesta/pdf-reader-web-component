@@ -23,7 +23,7 @@
 
     this.ctx = this.viewport.getContext('2d');
 
-    this.URL = el.dataset.url;
+    this.SRC = el.getAttribute('src');
     this.WIDTH = el.getAttribute('width');
     this.HEIGHT = el.getAttribute('height');
 
@@ -55,7 +55,7 @@
   Reader.prototype.loadPDF = function() {
     var self = this;
 
-    PDFJS.getDocument(this.URL).then(function (pdf) {
+    PDFJS.getDocument(this.SRC).then(function (pdf) {
       self.PDF = pdf;
       self.renderPDF(1);
 
@@ -232,7 +232,7 @@
 
   Reader.prototype.download = function (context) {
     var a = document.createElement('a'),
-        filename = context.URL.split('/');
+        filename = context.SRC.split('/');
 
     a.href = this.downloadLink;
     a.target = '_parent';
