@@ -56,6 +56,7 @@
   </template>
 
   <!-- build:script inline bundle -->
+  <script src="scripts/vendor/compatibility.js"></script>
   <script src="scripts/vendor/pdf.js"></script>
   <script src="scripts/main.js"></script>
   <!-- /build -->
@@ -64,7 +65,7 @@
     Polymer('pdf-reader', {
       //applyAuthorStyles: true,
       //resetStyleInheritance: true,
-      created: function() {
+      ready: function() {
         this.instance = new Polymer.Reader(this);
       },
       enteredView: function() { },

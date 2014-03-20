@@ -154,9 +154,11 @@ module.exports = function (grunt) {
     },
     uglify: {
       '<%= yeoman.dist %>/scripts/polymer.min.js': [
-        '<%= yeoman.app %>/bower_components/polymer/polymer.min.js'
+        '<%= yeoman.app %>/bower_components/platform/platform.js',
+        '<%= yeoman.app %>/bower_components/polymer/polymer.js'
       ],
       '.tmp/elements/<%= yeoman.element %>/scripts/vendor/pdf.js': [
+        '<%= yeoman.app %>/scripts/vendor/compatibility.js',
         '<%= yeoman.app %>/scripts/vendor/pdf.js'
       ],
       '.tmp/elements/<%= yeoman.element %>/scripts/main.js': [
@@ -284,8 +286,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', [
     'clean:server',
-
-
     'connect:test',
     'mocha'
   ]);
