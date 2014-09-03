@@ -2,9 +2,8 @@
   "name": "pdf-reader-web-component",
   "version": "0.1.0",
   "dependencies": {
-    "modernizr": "~2.6.3",
     "polymer": "latest",
-    "platform": "Polymer/platform#~0.2.1"
+    "platform": "Polymer/platform"
   },
   "keywords": [
     "web-components"

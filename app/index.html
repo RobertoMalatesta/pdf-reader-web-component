@@ -6,27 +6,18 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title></title>
-  <meta name="description" content="">
+  <title>PDF Reader web component</title>
   <meta name="viewport" content="width=device-width">
-  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-  <!-- Place your HTML imports here -->
+  <!-- build:js /scripts/polymer.min.js -->
+  <script src="bower_components/platform/platform.js"></script>
+  <!-- endbuild -->
+
   <link rel="import" href="/elements/pdf-reader/pdf-reader.html">
 </head>
 <body>
 
   <pdf-reader src="//localhost:9000/sample.pdf" width=720 height=480></pdf-reader>
 
-  <script>
-    document.addEventListener('WebComponentsReady', function() {
-      // Perform some behaviour
-    });
-  </script>
-
-  <!-- build:js /scripts/polymer.min.js -->
-  <script src="bower_components/platform/platform.js"></script>
-  <script src="bower_components/polymer/polymer.js"></script>
-  <!-- endbuild -->
 </body>
 </html>

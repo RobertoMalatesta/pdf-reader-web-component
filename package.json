@@ -28,8 +28,5 @@
     "grunt-html-build": "~0.3.0",
     "grunt-image-embed": "~0.3.1",
     "grunt-htmlcompressor": "~0.1.8"
-  },
-  "engines": {
-    "node": ">=0.8.0"
   }
 }

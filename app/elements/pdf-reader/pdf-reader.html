@@ -1,4 +1,6 @@
-<polymer-element name="pdf-reader"  attributes="">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<polymer-element name="pdf-reader">
 
   <template>
 
@@ -63,13 +65,9 @@
 
   <script>
     Polymer('pdf-reader', {
-      //applyAuthorStyles: true,
-      //resetStyleInheritance: true,
       ready: function() {
         this.instance = new Polymer.Reader(this);
       },
-      enteredView: function() { },
-      leftView: function() { },
       attributeChanged: function (attrName, oldVal, newVal) {
         this.instance.setSize(attrName, newVal);
       }
