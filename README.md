@@ -1,11 +1,9 @@
 PDF Reader Web Component
 ==========
 
-PDF Reader Web Component is a custom element built with <a href="http://www.polymer-project.org/">Polymer</a> and <a href="https://github.com/mozilla/pdf.js">PDF.js</a>.
+PDF Reader Web Component is a web component built according to Web Components specification and using <a href="https://github.com/mozilla/pdf.js">PDF.js</a>. This is a native implementation, thus it requires browser support of HTML Imports, Shadow DOM and `document.registerElement`.
 
 Component can be used as a widget on the web page to display attached PDF docs.
-
-<a href="http://demo.romanliutikov.com/web-components/">DEMO</a>
 
 ##Usage
 
@@ -13,11 +11,7 @@ Install deps and build component:
 
 `npm install && bower install && grunt`
 
-Include Polymer script in your HTML:
-
-`<script src="polymer.min.js"></script>`
-
-HTML import in `head`:
+Include HTML import in `head`:
 
 `<link rel="import" href="elements/pdf-reader/pdf-reader.html">`
 
