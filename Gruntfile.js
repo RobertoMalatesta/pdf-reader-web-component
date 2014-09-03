@@ -153,9 +153,8 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
-      '<%= yeoman.dist %>/scripts/polymer.min.js': [
-        '<%= yeoman.app %>/bower_components/platform/platform.js',
-        '<%= yeoman.app %>/bower_components/polymer/polymer.js'
+      '<%= yeoman.dist %>/scripts/platform.min.js': [
+        '<%= yeoman.app %>/bower_components/platform/platform.js'
       ],
       '.tmp/elements/<%= yeoman.element %>/scripts/vendor/pdf.js': [
         '<%= yeoman.app %>/scripts/vendor/compatibility.js',
@@ -229,10 +228,14 @@ module.exports = function (grunt) {
             bundle: [
               '.tmp/elements/<%= yeoman.element %>/scripts/vendor/pdf.js',
               '.tmp/elements/<%= yeoman.element %>/scripts/main.js'
-            ]
+            ],
+            polymer: '<%= yeoman.app %>/bower_components/polymer/polymer.js'
           },
           styles: {
             main: '.tmp/elements/<%= yeoman.element %>/styles/{,*/}*.css'
+          },
+          sections: {
+            polymerlayout: '<%= yeoman.app %>/bower_components/polymer/layout.html'
           }
         }
       }
@@ -247,15 +250,30 @@ module.exports = function (grunt) {
       }
     },
     htmlcompressor: {
-      compile: {
+      dist: {
         files: {
-          '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html': '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
+          '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html':
+            '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
         },
         options: {
           type: 'html',
           preserveServerScript: true,
           removeScriptAttr: true,
           compressCss: true
+        }
+      },
+      js: {
+        files: {
+          '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html':
+            '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
+        },
+        options: {
+          type: 'html',
+          preserveServerScript: true,
+          preserveComments: true,
+          preserveLineBreaks: true,
+          removeScriptAttr: true,
+          compressJs: true
         }
       }
     },
@@ -300,8 +318,9 @@ module.exports = function (grunt) {
     'copy:dist',
     'usemin',
     'imageEmbed',
+    'htmlcompressor:js',
     'htmlbuild:dist',
-    'htmlcompressor'
+    'htmlcompressor:dist'
   ]);
 
   grunt.registerTask('default', [
