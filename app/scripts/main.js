@@ -3,8 +3,13 @@
 'use strict';
 
 (function (window, undefined) {
-  var Reader = function (el) {
+
+  var Reader = function (el, ownerDocument) {
+
+    this.shadowRoot = el.createShadowRoot();
     this.element = el;
+    this.shadowRoot.appendChild(ownerDocument
+      .querySelector('#template').content.cloneNode(true));
     this.reader = el.shadowRoot.querySelector('.pdf-viewer');
 
     this.viewportOut = this.reader.querySelector('.pdf-viewport-out');
@@ -29,7 +34,7 @@
 
     this.setEvents();
     this.setSize();
-    PDFJS.workerSrc = 'elements/pdf-reader/scripts/vendor/pdf.worker.js';
+    PDFJS.workerSrc = '/scripts/vendor/pdf.worker.js';
     this.loadPDF();
   };
 
@@ -270,5 +275,5 @@
     }, false);
   };
 
-  window.Polymer.Reader = Reader;
+  window.Reader = Reader;
 })(window);

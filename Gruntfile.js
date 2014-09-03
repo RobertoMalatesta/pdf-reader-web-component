@@ -121,7 +121,6 @@ module.exports = function (grunt) {
         imagesDir: '<%= yeoman.app %>/images',
         javascriptsDir: '<%= yeoman.app %>/scripts',
         fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: '<%= yeoman.app %>/bower_components',
         httpImagesPath: '/images',
         httpGeneratedImagesPath: '/images/generated',
         httpFontsPath: '/styles/fonts',
@@ -153,10 +152,6 @@ module.exports = function (grunt) {
       }
     },
     uglify: {
-      '<%= yeoman.dist %>/scripts/polymer.min.js': [
-        '<%= yeoman.app %>/bower_components/platform/platform.js',
-        '<%= yeoman.app %>/bower_components/polymer/polymer.js'
-      ],
       '.tmp/elements/<%= yeoman.element %>/scripts/vendor/pdf.js': [
         '<%= yeoman.app %>/scripts/vendor/compatibility.js',
         '<%= yeoman.app %>/scripts/vendor/pdf.js'
@@ -247,9 +242,10 @@ module.exports = function (grunt) {
       }
     },
     htmlcompressor: {
-      compile: {
+      dist: {
         files: {
-          '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html': '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
+          '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html':
+            '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
         },
         options: {
           type: 'html',
@@ -257,11 +253,51 @@ module.exports = function (grunt) {
           removeScriptAttr: true,
           compressCss: true
         }
+      },
+      js: {
+        files: {
+          '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html':
+            '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
+        },
+        options: {
+          type: 'html',
+          preserveServerScript: true,
+          preserveComments: true,
+          preserveLineBreaks: true,
+          removeScriptAttr: true,
+          compressJs: true
+        }
       }
     },
     bower: {
       all: {
         rjsConfig: '<%= yeoman.app %>/scripts/main.js'
+      }
+    },
+    'string-replace': {
+      js: {
+        files: {
+          '.tmp/elements/<%= yeoman.element %>/scripts/main.js':
+            '.tmp/elements/<%= yeoman.element %>/scripts/main.js'
+        },
+        options: {
+          replacements: [{
+            pattern: '/scripts/vendor/pdf.worker.js',
+            replacement: '/elements/<%= yeoman.element %>/scripts/vendor/pdf.worker.js'
+          }]
+        }
+      },
+      html: {
+        files: {
+          '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html':
+            '<%= yeoman.dist %>/elements/<%= yeoman.element %>/<%= yeoman.element %>.html'
+        },
+        options: {
+          replacements: [{
+            pattern: '@import "/elements/pdf-reader/styles/main.css";',
+            replacement: ''
+          }]
+        }
       }
     }
   });
@@ -296,12 +332,15 @@ module.exports = function (grunt) {
     'autoprefixer',
     'cssmin',
     'uglify',
+    'string-replace:js',
     'copy:images',
     'copy:dist',
+    'string-replace:html',
     'usemin',
     'imageEmbed',
+    'htmlcompressor:js',
     'htmlbuild:dist',
-    'htmlcompressor'
+    'htmlcompressor:dist'
   ]);
 
   grunt.registerTask('default', [
